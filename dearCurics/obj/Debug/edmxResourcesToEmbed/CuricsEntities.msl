@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CuricsModelStoreContainer" CdmEntityContainer="CuricsEntities">
+    <EntitySetMapping Name="admin_specialization">
+      <EntityTypeMapping TypeName="CuricsModel.admin_specialization">
+        <MappingFragment StoreEntitySet="admin_specialization">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="image_source" ColumnName="image_source" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="general_setting">
+      <EntityTypeMapping TypeName="CuricsModel.general_setting">
+        <MappingFragment StoreEntitySet="general_setting">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="site_title" ColumnName="site_title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
