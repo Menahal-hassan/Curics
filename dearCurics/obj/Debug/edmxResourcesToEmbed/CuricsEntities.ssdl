@@ -8,6 +8,44 @@
     <Property Name="name" Type="nvarchar" MaxLength="255" />
     <Property Name="image_source" Type="nvarchar" MaxLength="255" />
   </EntityType>
+  <EntityType Name="doctor_price_payment">
+    <Key>
+      <PropertyRef Name="price_id" />
+    </Key>
+    <Property Name="doctor_id" Type="int" Nullable="false" />
+    <Property Name="price_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="price" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="doctor_work_experience">
+    <Key>
+      <PropertyRef Name="work_id" />
+    </Key>
+    <Property Name="work_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="place" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="word_as" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="start_date" Type="date" Nullable="false" />
+    <Property Name="finish_date" Type="date" Nullable="false" />
+    <Property Name="doctor_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="doctors">
+    <Key>
+      <PropertyRef Name="doctor_id" />
+    </Key>
+    <Property Name="doctor_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="address" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="contact_number" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="gender" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="degree" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="specialization" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="facebook_id" Type="nvarchar" MaxLength="255" />
+    <Property Name="instegram_id" Type="nvarchar" MaxLength="255" />
+    <Property Name="twitter_id" Type="nvarchar" MaxLength="255" />
+    <Property Name="image_source" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="personal_statement" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="general_setting">
     <Key>
       <PropertyRef Name="id" />
@@ -15,8 +53,43 @@
     <Property Name="id" Type="int" Nullable="false" />
     <Property Name="site_title" Type="text" />
   </EntityType>
+  <Association Name="FK_doctor_price_payment_doctors">
+    <End Role="doctors" Type="Self.doctors" Multiplicity="1" />
+    <End Role="doctor_price_payment" Type="Self.doctor_price_payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="doctors">
+        <PropertyRef Name="doctor_id" />
+      </Principal>
+      <Dependent Role="doctor_price_payment">
+        <PropertyRef Name="doctor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_doctor_work_experience_doctor_work_experience">
+    <End Role="doctors" Type="Self.doctors" Multiplicity="1" />
+    <End Role="doctor_work_experience" Type="Self.doctor_work_experience" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="doctors">
+        <PropertyRef Name="doctor_id" />
+      </Principal>
+      <Dependent Role="doctor_work_experience">
+        <PropertyRef Name="doctor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="CuricsModelStoreContainer">
     <EntitySet Name="admin_specialization" EntityType="Self.admin_specialization" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="doctor_price_payment" EntityType="Self.doctor_price_payment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="doctor_work_experience" EntityType="Self.doctor_work_experience" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="doctors" EntityType="Self.doctors" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="general_setting" EntityType="Self.general_setting" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_doctor_price_payment_doctors" Association="Self.FK_doctor_price_payment_doctors">
+      <End Role="doctors" EntitySet="doctors" />
+      <End Role="doctor_price_payment" EntitySet="doctor_price_payment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_doctor_work_experience_doctor_work_experience" Association="Self.FK_doctor_work_experience_doctor_work_experience">
+      <End Role="doctors" EntitySet="doctors" />
+      <End Role="doctor_work_experience" EntitySet="doctor_work_experience" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

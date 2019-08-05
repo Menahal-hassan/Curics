@@ -18,5 +18,46 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="doctor_price_payment">
+      <EntityTypeMapping TypeName="CuricsModel.doctor_price_payment">
+        <MappingFragment StoreEntitySet="doctor_price_payment">
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="price_id" ColumnName="price_id" />
+          <ScalarProperty Name="doctor_id" ColumnName="doctor_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="doctor_work_experience">
+      <EntityTypeMapping TypeName="CuricsModel.doctor_work_experience">
+        <MappingFragment StoreEntitySet="doctor_work_experience">
+          <ScalarProperty Name="doctor_id" ColumnName="doctor_id" />
+          <ScalarProperty Name="finish_date" ColumnName="finish_date" />
+          <ScalarProperty Name="start_date" ColumnName="start_date" />
+          <ScalarProperty Name="word_as" ColumnName="word_as" />
+          <ScalarProperty Name="place" ColumnName="place" />
+          <ScalarProperty Name="work_id" ColumnName="work_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="doctors">
+      <EntityTypeMapping TypeName="CuricsModel.doctor">
+        <MappingFragment StoreEntitySet="doctors">
+          <ScalarProperty Name="personal_statement" ColumnName="personal_statement" />
+          <ScalarProperty Name="image_source" ColumnName="image_source" />
+          <ScalarProperty Name="twitter_id" ColumnName="twitter_id" />
+          <ScalarProperty Name="instegram_id" ColumnName="instegram_id" />
+          <ScalarProperty Name="facebook_id" ColumnName="facebook_id" />
+          <ScalarProperty Name="specialization" ColumnName="specialization" />
+          <ScalarProperty Name="degree" ColumnName="degree" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="contact_number" ColumnName="contact_number" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="doctor_id" ColumnName="doctor_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

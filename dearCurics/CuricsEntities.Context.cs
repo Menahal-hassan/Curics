@@ -27,5 +27,8 @@ namespace dearCurics
     
         public virtual DbSet<admin_specialization> admin_specialization { get; set; }
         public virtual DbSet<general_setting> general_setting { get; set; }
+        public virtual DbSet<doctor_price_payment> doctor_price_payment { get; set; }
+        public virtual DbSet<doctor_work_experience> doctor_work_experience { get; set; }
+        public virtual DbSet<doctor> doctors { get; set; }
     }
 }

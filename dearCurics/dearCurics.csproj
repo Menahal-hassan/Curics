@@ -198,12 +198,23 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\doctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="doctor.cs">
+      <DependentUpon>CuricsEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="doctor_price_payment.cs">
+      <DependentUpon>CuricsEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="doctor_work_experience.cs">
+      <DependentUpon>CuricsEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DoctorViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -391,6 +402,7 @@
     <Content Include="CuricsEntities.edmx.diagram">
       <DependentUpon>CuricsEntities.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\doctor\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CuricsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CuricsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="admin_specialization">
           <Key>
             <PropertyRef Name="Id" />
@@ -13,6 +13,44 @@
           <Property Name="name" Type="nvarchar" MaxLength="255" />
           <Property Name="image_source" Type="nvarchar" MaxLength="255" />
         </EntityType>
+        <EntityType Name="doctor_price_payment">
+          <Key>
+            <PropertyRef Name="price_id" />
+          </Key>
+          <Property Name="doctor_id" Type="int" Nullable="false" />
+          <Property Name="price_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="price" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="doctor_work_experience">
+          <Key>
+            <PropertyRef Name="work_id" />
+          </Key>
+          <Property Name="work_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="place" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="word_as" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="start_date" Type="date" Nullable="false" />
+          <Property Name="finish_date" Type="date" Nullable="false" />
+          <Property Name="doctor_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="doctors">
+          <Key>
+            <PropertyRef Name="doctor_id" />
+          </Key>
+          <Property Name="doctor_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="contact_number" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="gender" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="degree" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="specialization" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="facebook_id" Type="nvarchar" MaxLength="255" />
+          <Property Name="instegram_id" Type="nvarchar" MaxLength="255" />
+          <Property Name="twitter_id" Type="nvarchar" MaxLength="255" />
+          <Property Name="image_source" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="personal_statement" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="general_setting">
           <Key>
             <PropertyRef Name="id" />
@@ -20,12 +58,46 @@
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="site_title" Type="text" />
         </EntityType>
+        <Association Name="FK_doctor_price_payment_doctors">
+          <End Role="doctors" Type="Self.doctors" Multiplicity="1" />
+          <End Role="doctor_price_payment" Type="Self.doctor_price_payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctors">
+              <PropertyRef Name="doctor_id" />
+            </Principal>
+            <Dependent Role="doctor_price_payment">
+              <PropertyRef Name="doctor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_doctor_work_experience_doctor_work_experience">
+          <End Role="doctors" Type="Self.doctors" Multiplicity="1" />
+          <End Role="doctor_work_experience" Type="Self.doctor_work_experience" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctors">
+              <PropertyRef Name="doctor_id" />
+            </Principal>
+            <Dependent Role="doctor_work_experience">
+              <PropertyRef Name="doctor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CuricsModelStoreContainer">
           <EntitySet Name="admin_specialization" EntityType="Self.admin_specialization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="doctor_price_payment" EntityType="Self.doctor_price_payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="doctor_work_experience" EntityType="Self.doctor_work_experience" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="doctors" EntityType="Self.doctors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="general_setting" EntityType="Self.general_setting" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_doctor_price_payment_doctors" Association="Self.FK_doctor_price_payment_doctors">
+            <End Role="doctors" EntitySet="doctors" />
+            <End Role="doctor_price_payment" EntitySet="doctor_price_payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_doctor_work_experience_doctor_work_experience" Association="Self.FK_doctor_work_experience_doctor_work_experience">
+            <End Role="doctors" EntitySet="doctors" />
+            <End Role="doctor_work_experience" EntitySet="doctor_work_experience" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CuricsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -47,7 +119,84 @@
         <EntityContainer Name="CuricsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="admin_specialization" EntityType="Self.admin_specialization" />
           <EntitySet Name="general_setting" EntityType="Self.general_setting" />
+          <EntitySet Name="doctor_price_payment" EntityType="CuricsModel.doctor_price_payment" />
+          <EntitySet Name="doctor_work_experience" EntityType="CuricsModel.doctor_work_experience" />
+          <EntitySet Name="doctors" EntityType="CuricsModel.doctor" />
+          <AssociationSet Name="FK_doctor_price_payment_doctors" Association="CuricsModel.FK_doctor_price_payment_doctors">
+            <End Role="doctor" EntitySet="doctors" />
+            <End Role="doctor_price_payment" EntitySet="doctor_price_payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_doctor_work_experience_doctor_work_experience" Association="CuricsModel.FK_doctor_work_experience_doctor_work_experience">
+            <End Role="doctor" EntitySet="doctors" />
+            <End Role="doctor_work_experience" EntitySet="doctor_work_experience" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="doctor_price_payment">
+          <Key>
+            <PropertyRef Name="price_id" />
+          </Key>
+          <Property Name="doctor_id" Type="Int32" Nullable="false" />
+          <Property Name="price_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="doctor" Relationship="CuricsModel.FK_doctor_price_payment_doctors" FromRole="doctor_price_payment" ToRole="doctor" />
+          <Property Name="price" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="doctor_work_experience">
+          <Key>
+            <PropertyRef Name="work_id" />
+          </Key>
+          <Property Name="work_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="place" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="word_as" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="finish_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="doctor_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="doctor" Relationship="CuricsModel.FK_doctor_work_experience_doctor_work_experience" FromRole="doctor_work_experience" ToRole="doctor" />
+        </EntityType>
+        <EntityType Name="doctor">
+          <Key>
+            <PropertyRef Name="doctor_id" />
+          </Key>
+          <Property Name="doctor_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="contact_number" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="degree" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="specialization" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="facebook_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="instegram_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="twitter_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="image_source" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="doctor_price_payment" Relationship="CuricsModel.FK_doctor_price_payment_doctors" FromRole="doctor" ToRole="doctor_price_payment" />
+          <NavigationProperty Name="doctor_work_experience" Relationship="CuricsModel.FK_doctor_work_experience_doctor_work_experience" FromRole="doctor" ToRole="doctor_work_experience" />
+          <Property Name="personal_statement" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_doctor_price_payment_doctors">
+          <End Type="CuricsModel.doctor" Role="doctor" Multiplicity="1" />
+          <End Type="CuricsModel.doctor_price_payment" Role="doctor_price_payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctor">
+              <PropertyRef Name="doctor_id" />
+            </Principal>
+            <Dependent Role="doctor_price_payment">
+              <PropertyRef Name="doctor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_doctor_work_experience_doctor_work_experience">
+          <End Type="CuricsModel.doctor" Role="doctor" Multiplicity="1" />
+          <End Type="CuricsModel.doctor_work_experience" Role="doctor_work_experience" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctor">
+              <PropertyRef Name="doctor_id" />
+            </Principal>
+            <Dependent Role="doctor_work_experience">
+              <PropertyRef Name="doctor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -68,6 +217,47 @@
               <MappingFragment StoreEntitySet="general_setting">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="site_title" ColumnName="site_title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="doctor_price_payment">
+            <EntityTypeMapping TypeName="CuricsModel.doctor_price_payment">
+              <MappingFragment StoreEntitySet="doctor_price_payment">
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price_id" ColumnName="price_id" />
+                <ScalarProperty Name="doctor_id" ColumnName="doctor_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="doctor_work_experience">
+            <EntityTypeMapping TypeName="CuricsModel.doctor_work_experience">
+              <MappingFragment StoreEntitySet="doctor_work_experience">
+                <ScalarProperty Name="doctor_id" ColumnName="doctor_id" />
+                <ScalarProperty Name="finish_date" ColumnName="finish_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="word_as" ColumnName="word_as" />
+                <ScalarProperty Name="place" ColumnName="place" />
+                <ScalarProperty Name="work_id" ColumnName="work_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="doctors">
+            <EntityTypeMapping TypeName="CuricsModel.doctor">
+              <MappingFragment StoreEntitySet="doctors">
+                <ScalarProperty Name="personal_statement" ColumnName="personal_statement" />
+                <ScalarProperty Name="image_source" ColumnName="image_source" />
+                <ScalarProperty Name="twitter_id" ColumnName="twitter_id" />
+                <ScalarProperty Name="instegram_id" ColumnName="instegram_id" />
+                <ScalarProperty Name="facebook_id" ColumnName="facebook_id" />
+                <ScalarProperty Name="specialization" ColumnName="specialization" />
+                <ScalarProperty Name="degree" ColumnName="degree" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="contact_number" ColumnName="contact_number" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="doctor_id" ColumnName="doctor_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

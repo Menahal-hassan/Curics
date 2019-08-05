@@ -18,5 +18,82 @@
   <EntityContainer Name="CuricsEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="admin_specialization" EntityType="Self.admin_specialization" />
     <EntitySet Name="general_setting" EntityType="Self.general_setting" />
+    <EntitySet Name="doctor_price_payment" EntityType="CuricsModel.doctor_price_payment" />
+    <EntitySet Name="doctor_work_experience" EntityType="CuricsModel.doctor_work_experience" />
+    <EntitySet Name="doctors" EntityType="CuricsModel.doctor" />
+    <AssociationSet Name="FK_doctor_price_payment_doctors" Association="CuricsModel.FK_doctor_price_payment_doctors">
+      <End Role="doctor" EntitySet="doctors" />
+      <End Role="doctor_price_payment" EntitySet="doctor_price_payment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_doctor_work_experience_doctor_work_experience" Association="CuricsModel.FK_doctor_work_experience_doctor_work_experience">
+      <End Role="doctor" EntitySet="doctors" />
+      <End Role="doctor_work_experience" EntitySet="doctor_work_experience" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="doctor_price_payment">
+    <Key>
+      <PropertyRef Name="price_id" />
+    </Key>
+    <Property Name="doctor_id" Type="Int32" Nullable="false" />
+    <Property Name="price_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="doctor" Relationship="CuricsModel.FK_doctor_price_payment_doctors" FromRole="doctor_price_payment" ToRole="doctor" />
+    <Property Name="price" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="doctor_work_experience">
+    <Key>
+      <PropertyRef Name="work_id" />
+    </Key>
+    <Property Name="work_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="place" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="word_as" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="finish_date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="doctor_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="doctor" Relationship="CuricsModel.FK_doctor_work_experience_doctor_work_experience" FromRole="doctor_work_experience" ToRole="doctor" />
+  </EntityType>
+  <EntityType Name="doctor">
+    <Key>
+      <PropertyRef Name="doctor_id" />
+    </Key>
+    <Property Name="doctor_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="address" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="contact_number" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="gender" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="degree" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="specialization" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="facebook_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="instegram_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="twitter_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="image_source" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="doctor_price_payment" Relationship="CuricsModel.FK_doctor_price_payment_doctors" FromRole="doctor" ToRole="doctor_price_payment" />
+    <NavigationProperty Name="doctor_work_experience" Relationship="CuricsModel.FK_doctor_work_experience_doctor_work_experience" FromRole="doctor" ToRole="doctor_work_experience" />
+    <Property Name="personal_statement" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_doctor_price_payment_doctors">
+    <End Type="CuricsModel.doctor" Role="doctor" Multiplicity="1" />
+    <End Type="CuricsModel.doctor_price_payment" Role="doctor_price_payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="doctor">
+        <PropertyRef Name="doctor_id" />
+      </Principal>
+      <Dependent Role="doctor_price_payment">
+        <PropertyRef Name="doctor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_doctor_work_experience_doctor_work_experience">
+    <End Type="CuricsModel.doctor" Role="doctor" Multiplicity="1" />
+    <End Type="CuricsModel.doctor_work_experience" Role="doctor_work_experience" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="doctor">
+        <PropertyRef Name="doctor_id" />
+      </Principal>
+      <Dependent Role="doctor_work_experience">
+        <PropertyRef Name="doctor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

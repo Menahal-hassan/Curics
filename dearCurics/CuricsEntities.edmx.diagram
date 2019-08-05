@@ -7,6 +7,11 @@
       <Diagram DiagramId="431895827e674349b53d3b0958211cf1" Name="Diagram1">
         <EntityTypeShape EntityType="CuricsModel.admin_specialization" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CuricsModel.general_setting" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CuricsModel.doctor_price_payment" Width="1.5" PointX="3" PointY="4.125" />
+        <EntityTypeShape EntityType="CuricsModel.doctor_work_experience" Width="1.5" PointX="3" PointY="6.625" />
+        <EntityTypeShape EntityType="CuricsModel.doctor" Width="1.5" PointX="0.75" PointY="4.625" />
+        <AssociationConnector Association="CuricsModel.FK_doctor_price_payment_doctors" />
+        <AssociationConnector Association="CuricsModel.FK_doctor_work_experience_doctor_work_experience" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
