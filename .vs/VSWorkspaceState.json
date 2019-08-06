@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\dearCurics",
+    "\\dearCurics\\Controllers",
+    "\\dearCurics\\Views",
+    "\\dearCurics\\Views\\Account"
   ],
+  "SelectedNode": "\\dearCurics\\Views\\Account\\Login.cshtml",
   "PreviewInSolutionExplorer": false
 }
